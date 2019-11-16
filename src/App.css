@@ -1,23 +1,55 @@
-body {
+html,body {
   background-color: green;
+  height: 100%;
+  width: 100%;
 }
 
 .App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  height: 50em;
 }
 
 #wrapper {
-  width: 50%;
-  height: auto;
-  min-height: 25vh;
-  background-color: white;
-  border-radius: 3px;
+  width: 35em;
 }
 
 #quote-box {
-  display: table;
+  max-width: 100%;
+}
+
+.btn.focus, .btn:focus {
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+}
+
+#buttons a {
+  font-size: .85em;
+}
+
+#new-quote {
+  font-size: .85em;
+  opacity: 1;
+}
+
+.footer {
+  width: 35em;
+  text-align: center;
+  display: block;
+  margin: 15px auto 30px auto;
+  font-size: 0.8em;
+  color: #fff;
+}
+
+.footer a {
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+}
+
+.fadeOut{
+  opacity: 1;
+  transition: opacity 8s ease-out;
+}
+.fadeIn{
+   opacity: 0;
+   transition: opacity 8s ease-in;
 }

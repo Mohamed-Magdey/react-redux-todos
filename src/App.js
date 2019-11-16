@@ -6,7 +6,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quote: {}
+            quote: {},
+            visible: false
         };
         this.handleClick = this.handleClick.bind(this);
         this.fetchData = this.fetchData.bind(this);
@@ -17,7 +18,7 @@ class App extends Component {
 
         fetch(quote)
             .then(data => data.json())
-            .then(quote => this.setState({quote}));
+            .then(quote => this.setState({quote,visible: !this.state.visible}));
     }
 
     handleClick() {
@@ -31,22 +32,31 @@ class App extends Component {
         render() {
         const {quote} = this.state;
            let views =  (
-               <div id="quote-box">
-                    <div id="text" key={quote._id}>
-                        <strong>{quote.content}</strong>
+               <div id="quote-box" className="px-4">
+                    <div id="text" key={quote._id} className={`h4 text-center text-wrap
+                    ${this.state.visible? 'fadeIn': 'fadeOut'}`}>
+                        <i className="fas fa-quote-left"></i> {quote.content}
                     </div>
-                   <div id="author">{quote.author}</div>
-                   <div className="buttons">
+                   <div id="author" className="text-right pt-3">- {quote.author}</div>
+                   <div id="buttons" className="clearfix pt-4">
+
                        <a href="https://twitter.com/intent/tweet"
                           id="tweet-quote" rel="noopener noreferrer"
-                          target="_blank">
-                           <i className="fas fa-camera"></i>
+                          target="_blank" className="btn btn-primary mr-2">
+                           <i className="fab fa-twitter"></i>
                        </a>
+
                        <a href="https://www.tumblr.com/login"
                           id="thumblr" rel="noopener noreferrer"
-                          target="_blank">
+                          target="_blank" className="btn btn-primary fadeIn">
+                           <i className="fab fa-tumblr"></i>
                        </a>
-                       <button className="btn btn-primary" id="new-quote" onClick={this.handleClick}>New quote</button>
+
+                       <button className={`float-right btn btn-primary float-right`}
+                               id="new-quote"
+                               onClick={this.handleClick}>
+                           New quote
+                       </button>
                    </div>
                </div>
 
@@ -54,9 +64,12 @@ class App extends Component {
 
 
         return (
-            <div className="App">
-                <div className="container-fluid" id="wrapper">
+            <div className="App d-flex flex-column justify-content-center align-items-center">
+                <div id="wrapper" className="jumbotron bg-white">
                     {views}
+                </div>
+                <div className="footer">
+                    by <a href="https://codepen.io/Mohamed-Magdey">mohamed</a>
                 </div>
             </div>
         );
