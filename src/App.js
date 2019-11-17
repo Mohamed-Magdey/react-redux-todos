@@ -2,12 +2,58 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
+const Quote = ({quote,handleClick,color}) => (
+
+    <div id="quote-box" className="px-4">
+        <div id="text" key={quote._id} className={`h4 text-center text-wrap`}
+             style={{color}}
+        >
+            <i className="fas fa-quote-left"></i>  {quote.content}
+        </div>
+        <div id="author"
+             style={{color}}
+             className="text-right pt-3"
+        >
+            - {quote.author}
+        </div>
+        <div id="buttons" className="clearfix pt-4">
+
+            <a href="https://twitter.com/intent/tweet"
+               id="tweet-quote" rel="noopener noreferrer"
+               style={{backgroundColor: color}}
+               target="_blank" className="btn btn-primary text-white mr-2"
+            >
+                <i className="fab fa-twitter"></i>
+            </a>
+
+            <a href="https://www.tumblr.com/login"
+               id="thumblr" rel="noopener noreferrer"
+               style={{backgroundColor: color}}
+               target="_blank" className="btn btn-primary text-white"
+            >
+                <i className="fab fa-tumblr"></i>
+            </a>
+
+            <button className={`float-right btn text-white float-right`}
+                    id="new-quote"
+                    style={{backgroundColor: color}}
+                    onClick={handleClick}
+            >
+                New quote
+            </button>
+        </div>
+    </div>
+)
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             quote: {},
-            visible: false
+            colors: ['#16a085', '#27ae60', '#2c3e50',
+                    '#f39c12', '#e74c3c', '#9b59b6',
+                    '#FB6964', '#342224', "#472E32",
+                    "#BDBB99", "#77B1A9", "#73A857"]
         };
         this.handleClick = this.handleClick.bind(this);
         this.fetchData = this.fetchData.bind(this);
@@ -15,10 +61,14 @@ class App extends Component {
 
     fetchData() {
         const quote = 'https://api.quotable.io/random';
+        const {colors} = this.state;
+        let color = colors[Math.floor(Math.random() * colors.length)];
 
         fetch(quote)
             .then(data => data.json())
-            .then(quote => this.setState({quote,visible: !this.state.visible}));
+            .then(quote => this.setState({quote,color}));
+
+        document.body.style.backgroundColor = color;
     }
 
     handleClick() {
@@ -30,43 +80,13 @@ class App extends Component {
     }
 
         render() {
-        const {quote} = this.state;
-           let views =  (
-               <div id="quote-box" className="px-4">
-                    <div id="text" key={quote._id} className={`h4 text-center text-wrap
-                    ${this.state.visible? 'fadeIn': 'fadeOut'}`}>
-                        <i className="fas fa-quote-left"></i> {quote.content}
-                    </div>
-                   <div id="author" className="text-right pt-3">- {quote.author}</div>
-                   <div id="buttons" className="clearfix pt-4">
-
-                       <a href="https://twitter.com/intent/tweet"
-                          id="tweet-quote" rel="noopener noreferrer"
-                          target="_blank" className="btn btn-primary mr-2">
-                           <i className="fab fa-twitter"></i>
-                       </a>
-
-                       <a href="https://www.tumblr.com/login"
-                          id="thumblr" rel="noopener noreferrer"
-                          target="_blank" className="btn btn-primary fadeIn">
-                           <i className="fab fa-tumblr"></i>
-                       </a>
-
-                       <button className={`float-right btn btn-primary float-right`}
-                               id="new-quote"
-                               onClick={this.handleClick}>
-                           New quote
-                       </button>
-                   </div>
-               </div>
-
-            );
-
 
         return (
             <div className="App d-flex flex-column justify-content-center align-items-center">
                 <div id="wrapper" className="jumbotron bg-white">
-                    {views}
+                    <Quote quote={this.state.quote}
+                           color={this.state.color}
+                           handleClick={this.handleClick} />
                 </div>
                 <div className="footer">
                     by <a href="https://codepen.io/Mohamed-Magdey">mohamed</a>

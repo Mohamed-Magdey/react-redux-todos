@@ -1,5 +1,4 @@
 html,body {
-  background-color: green;
   height: 100%;
   width: 100%;
 }
@@ -19,6 +18,16 @@ html,body {
 .btn.focus, .btn:focus {
   -webkit-box-shadow: none!important;
   box-shadow: none!important;
+  outline: none !important;
+}
+
+.btn-primary, .btn-primary:hover,  .btn-primary:focus,
+.btn-primary:active{
+  border-color: transparent !important;
+}
+
+.btn:hover {
+  opacity: .9 !important;
 }
 
 #buttons a {
@@ -27,7 +36,6 @@ html,body {
 
 #new-quote {
   font-size: .85em;
-  opacity: 1;
 }
 
 .footer {
@@ -43,13 +51,4 @@ html,body {
   font-weight: 500;
   text-decoration: none;
   color: #fff;
-}
-
-.fadeOut{
-  opacity: 1;
-  transition: opacity 8s ease-out;
-}
-.fadeIn{
-   opacity: 0;
-   transition: opacity 8s ease-in;
 }
