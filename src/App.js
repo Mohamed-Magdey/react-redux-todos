@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import { CSSTransition } from 'react-transition-group';
 import './App.css';
 
-const Quote = ({quote,handleClick,color}) => (
+const Quote = ({quote,handleClick,color,bool}) => (
 
     <div id="quote-box" className="px-4">
-        <div id="text" key={quote._id} className={`h4 text-center text-wrap`}
-             style={{color}}
+        <CSSTransition
+            in={bool}
+            timeout={500} classNames="my-node"
         >
-            <i className="fas fa-quote-left"></i>  {quote.content}
-        </div>
+            <div id="text" key={quote._id} className={`h4 text-center text-wrap`}
+                 style={{color}}
+            >
+                <i className="fas fa-quote-left"></i>  {quote.content}
+            </div>
+        </CSSTransition>
         <div id="author"
              style={{color}}
              className="text-right pt-3"
@@ -53,7 +59,8 @@ class App extends Component {
             colors: ['#16a085', '#27ae60', '#2c3e50',
                     '#f39c12', '#e74c3c', '#9b59b6',
                     '#FB6964', '#342224', "#472E32",
-                    "#BDBB99", "#77B1A9", "#73A857"]
+                    "#BDBB99", "#77B1A9", "#73A857"],
+            bool: true,
         };
         this.handleClick = this.handleClick.bind(this);
         this.fetchData = this.fetchData.bind(this);
@@ -84,12 +91,19 @@ class App extends Component {
         return (
             <div className="App d-flex flex-column justify-content-center align-items-center">
                 <div id="wrapper" className="jumbotron bg-white">
-                    <Quote quote={this.state.quote}
-                           color={this.state.color}
-                           handleClick={this.handleClick} />
+                    <Quote color={this.state.color}
+                           quote={this.state.quote}
+                           bool={this.state.bool}
+                           handleClick={this.handleClick}
+                    />
                 </div>
                 <div className="footer">
-                    by <a href="https://codepen.io/Mohamed-Magdey">mohamed</a>
+                    by <a href="https://codepen.io/Mohamed-Magdey"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                >
+                            mohamed
+                        </a>
                 </div>
             </div>
         );

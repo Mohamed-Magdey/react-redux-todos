@@ -52,3 +52,46 @@ html,body {
   text-decoration: none;
   color: #fff;
 }
+
+@keyframes example {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.demo {
+  animation-name: example;
+  animation-duration: 2s;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity 1000ms;
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity 1000ms;
+}
+
+
+.my-node-enter {
+  opacity: 1;
+}
+.my-node-enter-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+.my-node-exit {
+  opacity: 0;
+}
+.my-node-exit-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in-out;
+}
