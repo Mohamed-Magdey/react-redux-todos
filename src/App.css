@@ -1,3 +1,4 @@
+/* General */
 body {
     background: #87b5b5;
 }
@@ -9,7 +10,13 @@ body {
     justify-content: center;
 }
 
+.editor {
+    width: 600px;
+    margin: 18px auto;
+}
+
 .toolbar {
+    position: relative;
     background-color: #4aa3a3;
     padding: 4px 4px 3px 3px;
     border: 1px solid #1d2f2f;
@@ -18,24 +25,107 @@ body {
     font-weight: bold;
 }
 
-#editor {
-    margin-top: 30px;
-    resize: vertical;
-    min-height: 200px;
-    outline: none;
-}
+/* editor */
 
-#preview {
-    min-height: 300px;
-    min-width: 300px;
-    height: auto;
-    width: 500px;
-    margin-top: 30px;
-}
-
-.wrap {
+.editor textarea, .preview {
     background-color: #c0d8d8;
     border: 1px solid #1d2f2f;
     box-shadow: 1px 1px 10px 2px #3a5f5f;
     border-top: none;
+}
+
+.editor .toolbar {
+    width: 99%;
+}
+
+.editor textarea {
+    width: 99%;
+    min-height: 200px;
+    margin-bottom: -5px;
+    resize: vertical;
+    outline: none;
+    padding-left: 5px;
+    padding-top: 5px;
+    font-size: 12px;
+}
+
+/* preview */
+.preview {
+    width: 800px;
+    margin: 20px auto;
+    min-height: 200px;
+    overflow-wrap: break-word;
+    padding-right: 20px;
+}
+
+.preview .toolbar {
+    left: -1px;
+    width: 100%;
+    padding-right: 17px;
+}
+
+.preview #preview {
+    margin-left: 5px;
+    margin-top: -10px;
+    width: 100%;
+}
+
+#preview h1 {
+    border-bottom: 2px solid #224B4B;
+}
+
+#preview h2 {
+    border-bottom: 1px solid #224B4B;
+}
+
+#preview code {
+    background: white;
+    padding: 1px 4px 2px 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#preview pre {
+    background: white;
+    padding: 5px 0 5px 5px;
+}
+
+
+#preview table {
+    border-collapse: collapse;
+}
+
+#preview td, #preview th {
+    border: 2px solid #224B4B;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* responsive */
+@media screen and (max-width: 850px) {
+    .preview {
+        width: 630px;
+    }
+    .editor {
+        width: 550px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    body {
+        margin: 5px 0;
+    }
+    .editor {
+        width: 80vw;
+        margin: 0 auto;
+    }
+    .preview {
+        width: 95vw;
+    }
+    #preview {
+        width: 100%;
+    }
+    img {
+        height: 200px;
+    }
 }

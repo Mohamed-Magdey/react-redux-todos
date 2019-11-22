@@ -4,10 +4,6 @@ import marked from 'marked';
 
 
 marked.setOptions({
-    renderer: new marked.Renderer(),
-    highlight: function(code) {
-        return require('highlight.js').highlightAuto(code).value;
-    },
     breaks: true,
 });
 
@@ -51,7 +47,6 @@ class App extends Component {
                           cols="50" rows="10" type="text"
                           onChange={this.handleChange}
                           value={this.state.editor}
-                          className="wrap"
                 ></textarea>
             </div>
             <div className="preview">
