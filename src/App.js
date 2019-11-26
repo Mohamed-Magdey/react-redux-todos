@@ -51,36 +51,77 @@ const bankOne = [{
 ];
 
 class DrumPad extends Component {
+    drumKeyTrigger;
+    drumId;
+    drumUrl;
+    drumKeyCode;
     constructor(props) {
         super(props);
+
+        this.handleButton = this.handleButton.bind(this);
+        this.playSound = this.playSound.bind(this);
+    }
+
+    handleButton(e) {
+        if (e.keyCode === this.props.drumKeyCode) {
+            this.playSound();
+        }
+    }
+
+    componentDidMount(){
+        document.addEventListener("keydown", this.handleButton);
+    }
+    componentWillUnmount(){
+        document.removeEventListener("keydown", this.handleButton);
+    }
+
+    playSound() {
+        const sound = document.getElementById(this.props.drumKeyTrigger);
+        const text = document.getElementById("display");
+        text.innerText = this.props.drumId;
+        sound.play();
     }
 
     render() {
-        const drum = bankOne.map((val) => (
-            <div className="drum-pad" id={val.id}>
-                <audio id={val.keyTrigger}
+        return (
+            <div id={this.props.drumId} className="drum-pad"
+                 onClick={this.playSound}
+                 onKeyPress={this.handleButton}
+            >
+                <audio id={this.props.drumKeyTrigger}
                        className="clip"
-                       src={val.url}
+                       src={this.props.drumUrl}
                 >
                 </audio>
-                {val.keyTrigger}
-            </div>
-        ));
-
-        return (
-            <div>
-                {drum}
+                {this.props.drumKeyTrigger}
             </div>
         )
     }
 }
 
+
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            bankOne: bankOne
+        }
+    }
+
   render() {
+        const data = this.state.bankOne.map((val) => {
+            return (
+                <DrumPad drumId={val.id}
+                         drumUrl={val.url}
+                         drumKeyCode={val.keyCode}
+                         drumKeyTrigger={val.keyTrigger}
+                         key={val.id}
+                />
+            )});
     return (
         <div className="App container" id="drum-machine">
             <div id="display"></div>
-            <DrumPad />
+            {data}
         </div>
     );
   }
