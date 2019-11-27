@@ -1,15 +1,58 @@
+body {
+  background-color: #8d8d8d;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .App {
+  outline: 5px solid orange;
+  width: 400px;
+  height: 400px;
   text-align: center;
+  background-color: #b3b3b3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#display {
+  width: 200px;
+  background-color: gray;
+  margin: 15px auto;
+  padding: 15px;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+.data {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .drum-pad {
-  width: 100%;
-  background-color: #00FF00;
-  border: 1px solid #2c3e50;
+  width: 100px;
+  height: 80px;
+  background-color: gray;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px black;
+  margin: 5px;
+  font-weight: bold;
+  padding-top: 35px;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
-audio {
-  display: block;
-  width: 100%;
-  background-color: #3f51b5;
+.drum-pad:active,
+.drum-pad:focus {
+  background-color: orange;
+  margin-top: 13px;
+  box-shadow: 0 3px orange;
+  height: 77px
 }

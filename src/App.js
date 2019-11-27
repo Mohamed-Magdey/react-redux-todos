@@ -79,6 +79,7 @@ class DrumPad extends Component {
         const sound = document.getElementById(this.props.drumKeyTrigger);
         const text = document.getElementById("display");
         text.innerText = this.props.drumId;
+        sound.currentTime = 0;
         sound.play();
     }
 
@@ -119,9 +120,11 @@ class App extends Component {
                 />
             )});
     return (
-        <div className="App container" id="drum-machine">
+        <div className="App" id="drum-machine">
             <div id="display"></div>
-            {data}
+            <div className="data">
+                {data}
+            </div>
         </div>
     );
   }
