@@ -1,32 +1,88 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: "Digital";
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot");
+  src: url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix")
+  format("embedded-opentype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2")
+  format("woff2"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff")
+  format("woff"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf")
+  format("truetype"), url("//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7") format("svg");
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+body {
+  background-color: #c2c2d6;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#root {
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.App {
+  border: 2px solid #47476b;
+  padding: 5px;
+  background: black;
+  width: 320px;
+  position: relative;
+}
+
+.formulaScreen {
+  min-height: 20px;
+  font-family: digital, serif;
+  font-size: 20px;
+  color: orange;
+  text-align: right;
+  vertical-align: text-top;
+  line-height: 20px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.outputScreen {
+  font-size: 29px;
+  font-family: digital, serif;
   color: white;
+  text-align: right;
+  line-height: 35px;
 }
 
-.App-link {
-  color: #61dafb;
+button {
+  position: relative;
+  height: 65px;
+  width: 80px;
+  color: white;
+  outline: 1px solid black;
+  border: none;
+  background: #4d4d4d;
+  font-family: Share Tech Mono, monospace;
+  font-size: 20px;
+  cursor: default;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button:hover {
+  color: black;
+  outline: .05em solid grey;
+  z-index: 3;
+}
+
+#clear {
+  background: rgb(172, 57, 57);
+}
+
+#clear, #zero {
+  width: 160px;
+}
+
+#divide, #multiply,
+#subtract, #add {
+  background: rgb(102, 102, 102);
+}
+
+#equals {
+  background: rgb(0, 68, 102);
+  position: absolute;
+  height: 130px;
+  bottom: 5px;
 }
