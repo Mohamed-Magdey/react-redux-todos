@@ -80,71 +80,120 @@ class App extends Component {
             data,
             display: '',
             numbers: [],
-            operations: []
+            operations: [],
+            history: []
         };
         this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick(e) {
-        let val = e.target.value;
+        let val = e.target.value,
+            history = [...this.state.history];
+        history.push(val);
 
-        if (val === 'AC') { // clear
-            this.setState({
-                display: '',
-                numbers: [],
-                operations: []
-            }, () => {
-                document.getElementsByClassName('formulaScreen')[0].innerText = '';
-                document.getElementById('display').innerText = '0';
-            });
-        }
+        this.setState({history: history}, ()=>{
 
-        // add (N) to input
-        if ((/[0-9]/).test(val)) {
-            this.setState({ display: this.state.display + val}, () => {
-                document.getElementById('display').innerText = this.state.display;
-            });
-        } else if ((/[-x+/]/).test(val)) { // set array of operation
-            this.setState({operations: this.state.operations.concat(val)}, ()=> {
+            // let symbol = this.state.history[this.state.history.length - 2],
+            //     negative = this.state.history[this.state.history.length - 1];
+            //
+            // if ((/[x+/]/).test(symbol) && (/[-]/).test(negative)) {
+            //     let number = [-[...this.state.numbers]];
+            //     this.setState({numbers: number}, ()=>{console.log(this.state.numbers)});
+            // }
+
+            if (val === 'AC') { // clear
+                this.setState({
+                    display: '',
+                    numbers: [],
+                    operations: [],
+                    history:[]
+                }, () => {
+                    document.getElementsByClassName('formulaScreen')[0].innerText = '';
+                    document.getElementById('display').innerText = '0';
+                });
+            }
+
+            if ((/[0-9.]/).test(val)) { // set string of numbers
+
+                let value = this.state.display + val;
+
+                if ((/^([0-9]+(\.[0-9]+)?)/).test(+value)) { // decimal
+                    this.setState({
+                        display: (/^[0]/).test(value)
+                            ? (value).replace(/^[0]*/, '0')
+                            : value
+                    }, () => {
+                        document.getElementById('display').innerText = this.state.display;
+                    });
+                }
+
+            } else if ((/[-x+/]/).test(val)) { // set array of operation
+
+                this.setState({operations: this.state.operations.concat(val)}, ()=> {
+
+                    let number = [...this.state.numbers];
+                    number.push(this.state.display);
+                    this.setState({numbers: number, display: ''}, ()=> {
+                        document.getElementsByClassName('formulaScreen')[0].innerText = val;
+                        document.getElementById('display').innerText = val;
+                    });
+                });
+            } else if (val ==='=') {
 
                 let number = [...this.state.numbers];
+
                 number.push(this.state.display);
-                this.setState({numbers: number, display: ''}, ()=> {
+                this.setState({numbers: number.filter(Boolean)}, ()=> {
 
-                    document.getElementsByClassName('formulaScreen')[0].innerText = val;
-                    document.getElementById('display').innerText = val;
-                });
-            });
-        } else if (val ==='=') {
-            let number = [...this.state.numbers];
+                    let value = this.state.numbers.slice(1),
+                        result = +this.state.numbers[0],
+                        operations = this.state.operations.length;
 
-            number.push(this.state.display);
-            this.setState({numbers: number}, ()=> {
+                    if (operations > value.length) {
+                        this.setState({operations: this.state.operations[operations - 1]}, () => {
 
-                let value = this.state.numbers.slice(1);
-                let result = +this.state.numbers[0];
-
-                for (let i = 0; i < this.state.operations.length; i++){
-                    switch (this.state.operations[i]) {
-                        case 'x':
-                            result *= +value[i];
-                            break;
-                        case '/':
-                            result /= +value[i];
-                            break;
-                        case '+':
-                            result += +value[i];
-                            break;
-                        case '-':
-                            result -= +value[i];
-                            break;
-                        default:
-                            alert("Error!!!");
+                            switch (this.state.operations) {
+                                case 'x':
+                                    result *= +value;
+                                    break;
+                                case '/':
+                                    result /= +value;
+                                    break;
+                                case '+':
+                                    result += +value;
+                                    break;
+                                case '-':
+                                    result -= +value;
+                                    break;
+                                default:
+                                    alert("Error!!!");
+                            }
+                            this.setState({display: result.toString()});
+                        });
+                    } else {
+                        for (let i = 0; i < this.state.operations.length; i++){
+                            switch (this.state.operations[i]) {
+                                case 'x':
+                                    result *= +value[i];
+                                    break;
+                                case '/':
+                                    result /= +value[i];
+                                    break;
+                                case '+':
+                                    result += +value[i];
+                                    break;
+                                case '-':
+                                    result -= +value[i];
+                                    break;
+                                default:
+                                    alert("Error!!!");
+                            }
+                        }
+                        this.setState({display: result.toString()});
                     }
-                }
-                this.setState({display: result});
-            })
-        }
+                })
+            }
+        });
     }
 
     componentDidMount(){
