@@ -93,14 +93,6 @@ class App extends Component {
 
         this.setState({history: history}, ()=>{
 
-            // let symbol = this.state.history[this.state.history.length - 2],
-            //     negative = this.state.history[this.state.history.length - 1];
-            //
-            // if ((/[x+/]/).test(symbol) && (/[-]/).test(negative)) {
-            //     let number = [-[...this.state.numbers]];
-            //     this.setState({numbers: number}, ()=>{console.log(this.state.numbers)});
-            // }
-
             if (val === 'AC') { // clear
                 this.setState({
                     display: '',
@@ -113,15 +105,16 @@ class App extends Component {
                 });
             }
 
-            if ((/[0-9.]/).test(val)) { // set string of numbers
+            if ((/[0-9.-]/).test(val)) { // set string of numbers
 
                 let value = this.state.display + val;
 
-                if ((/^([0-9]+(\.[0-9]+)?)/).test(+value)) { // decimal
+                if ((/^([0-9-]+(\.[0-9]+)?)/).test(+value)) { // decimal
                     this.setState({
-                        display: (/^[0]/).test(value)
+                        display: (/^-/).test(value) ? -value
+                            : ((/^[0]/).test(value)
                             ? (value).replace(/^[0]*/, '0')
-                            : value
+                            : value)
                     }, () => {
                         document.getElementById('display').innerText = this.state.display;
                     });
@@ -131,8 +124,12 @@ class App extends Component {
 
                 this.setState({operations: this.state.operations.concat(val)}, ()=> {
 
+                    // let symbol = this.state.history[this.state.history.length - 2],
+                    //     negative = this.state.history[this.state.history.length - 1];
+
                     let number = [...this.state.numbers];
                     number.push(this.state.display);
+
                     this.setState({numbers: number, display: ''}, ()=> {
                         document.getElementsByClassName('formulaScreen')[0].innerText = val;
                         document.getElementById('display').innerText = val;
