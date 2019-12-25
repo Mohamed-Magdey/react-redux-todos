@@ -94,7 +94,9 @@ class Timer extends Component {
             intervalID: setInterval(() => {
                 this.setState({timer: this.state.timer - 1});
                 let timer = this.state.timer;
-                if (timer < 0) {
+                if (timer === 0) {
+                    this.audioBeep.play()
+                } else if (timer < 0) {
                     let type = this.state.timerType === 'Session' ? (
                         clearInterval(this.state.intervalID),
                             this.counter(),
@@ -132,7 +134,9 @@ class Timer extends Component {
             timerType: 'Session',
             intervalID: ''
         });
-        clearInterval(this.state.intervalID)
+        clearInterval(this.state.intervalID);
+        this.audioBeep.pause();
+        this.audioBeep.currentTime = 0
     }
 
   render() {
@@ -176,6 +180,10 @@ class Timer extends Component {
                     <i className="fas fa-sync-alt fa-2x"></i>
                 </button>
             </div>
+            <audio id="beep" preload="auto"
+                   src="https://goo.gl/65cBl1"
+                   ref={(audio) => {this.audioBeep = audio;}}
+            />
         </div>
     );
   }
